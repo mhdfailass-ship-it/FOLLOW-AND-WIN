@@ -93,6 +93,101 @@
     submitBtn.innerText = "SENDING...";
     submitBtn.disabled = true;
 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majlis Follow & Win</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root { --purple: #4B0082; --yellow: #FFD700; --green: #28a745; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--yellow); margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
+        .card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; border: 4px solid var(--purple); position: relative; }
+        h1 { color: var(--purple); margin: 10px 0; font-size: 24px; text-transform: uppercase; }
+        .sub-text { color: #666; font-size: 14px; margin-bottom: 25px; }
+        
+        .btn-link { 
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--purple); color: white; text-decoration: none;
+            padding: 15px 20px; margin: 12px 0; border-radius: 50px;
+            font-weight: bold; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(75, 0, 130, 0.2); cursor: pointer; border: none; width: 100%; box-sizing: border-box;
+        }
+        .btn-link:active { transform: scale(0.95); }
+        .btn-link.done { background: var(--green) !important; transform: scale(1.02); box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); }
+        
+        .status-dot { width: 12px; height: 12px; background: white; border-radius: 50%; border: 2px solid rgba(0,0,0,0.1); }
+        .done .status-dot { background: white; display: flex; align-items: center; justify-content: center; }
+        .done .status-dot::after { content: '✓'; color: var(--green); font-size: 10px; font-weight: 900; }
+
+        #success-area { display: none; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #eee; }
+        input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        .submit-btn { background: black; color: white; width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
+
+        /* Animation for the buttons appearance */
+        .fade-in-up { animation: fadeInUp 0.5s both; }
+    </style>
+</head>
+<body>
+
+<div class="card animate__animated animate__fadeIn">
+    <div style="font-size: 40px;">🎁</div>
+    <h1>10 FOLLOW & WIN</h1>
+    <p class="sub-text">Tap each button to follow us and unlock the entry form!</p>
+
+    <button onclick="task('ig', 'https://www.instagram.com/majlishypermarket/')" id="ig" class="btn-link fade-in-up" style="animation-delay: 0.1s;">
+        Follow Instagram <div class="status-dot"></div>
+    </button>
+    <button onclick="task('fb', 'https://www.facebook.com/MAJLIS.HYPERMARKET.1/')" id="fb" class="btn-link fade-in-up" style="animation-delay: 0.2s;">
+        Like Facebook <div class="status-dot"></div>
+    </button>
+    <button onclick="task('tk', 'https://tiktok.com/majlishypermarket')" id="tk" class="btn-link fade-in-up" style="animation-delay: 0.3s;">
+        Follow TikTok <div class="status-dot"></div>
+    </button>
+    <button onclick="task('wa', 'https://wa.me/97460003745')" id="wa" class="btn-link fade-in-up" style="animation-delay: 0.4s;">
+        Share on WhatsApp <div class="status-dot"></div>
+    </button>
+
+   <div id="success-area" class="animate__animated animate__bounceIn">
+    <h3 style="color: var(--green);">✅ All Tasks Ready!</h3>
+    
+    <input type="text" id="custName" placeholder="Your Full Name" required>
+    
+    <input type="tel" id="custPhone" placeholder="Qatar Mobile Number (e.g. 33445566)" required>
+    
+    <button class="submit-btn" onclick="submit()">SUBMIT TO DRAW</button>
+</div>
+    
+    <p style="font-size: 10px; color: #999; margin-top: 15px;">*Winners verified manually before prizes are awarded.</p>
+</div>
+
+<script>
+    let score = 0;
+    const tasks = { ig: false, fb: false, tk: false, wa: false };
+
+    function task(id, url) {
+        window.open(url, '_blank');
+        if (!tasks[id]) {
+            tasks[id] = true;
+            document.getElementById(id).classList.add('done', 'animate__animated', 'animate__pulse');
+            score++;
+        }
+        if (score === 4) {
+            document.getElementById('success-area').style.display = 'block';
+        }
+    }
+
+   function submit() {
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
+    const submitBtn = document.querySelector('.submit-btn');
+
+    if (!name || !phone) return alert("Please enter both your name and phone number!");
+
+    submitBtn.innerText = "SENDING...";
+    submitBtn.disabled = true;
+
     fetch('https://script.google.com/macros/s/AKfycbwxy09rQWiD4L6Q0VOdjC1SpJ2el3gYOpUtFSBTQWSFgqxXLLVNTXva-BbiDQYDiay5/exec, {
         method: 'POST',
         mode: 'no-cors', // THIS LINE IS REQUIRED
@@ -112,6 +207,11 @@
         location.reload(); 
     });
 }
+
+</script>
+</body>
+</html>
+
 
 </script>
 </body>
