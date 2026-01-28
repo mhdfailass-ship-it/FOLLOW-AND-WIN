@@ -54,11 +54,15 @@
         Share on WhatsApp <div class="status-dot"></div>
     </button>
 
-    <div id="success-area" class="animate__animated animate__bounceIn">
-        <h3 style="color: var(--green);">✅ All Tasks Ready!</h3>
-        <input type="text" id="custName" placeholder="Your Full Name">
-        <button class="submit-btn" onclick="submit()">SUBMIT TO DRAW</button>
-    </div>
+   <div id="success-area" class="animate__animated animate__bounceIn">
+    <h3 style="color: var(--green);">✅ All Tasks Ready!</h3>
+    
+    <input type="text" id="custName" placeholder="Your Full Name" required>
+    
+    <input type="tel" id="custPhone" placeholder="Qatar Mobile Number (e.g. 33445566)" required>
+    
+    <button class="submit-btn" onclick="submit()">SUBMIT TO DRAW</button>
+</div>
     
     <p style="font-size: 10px; color: #999; margin-top: 15px;">*Winners verified manually before prizes are awarded.</p>
 </div>
@@ -80,31 +84,32 @@
     }
 
    function submit() {
-    const nameInput = document.getElementById('custName');
-    const name = nameInput.value;
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
     const submitBtn = document.querySelector('.submit-btn');
 
-    if (!name) return alert("Please enter your name!");
+    if (!name || !phone) return alert("Please enter both your name and phone number!");
 
-    submitBtn.innerText = "Processing...";
+    submitBtn.innerText = "SENDING...";
     submitBtn.disabled = true;
 
-    // Replace the URL below with your Google Script URL
-    fetch('https://script.google.com/macros/s/AKfycbxrwlSQpr1jWsPPBJ0M8AvFmsYhJK5G_a_DIi_T0t4Yb7BoYYy_0dH4h_Xk82Zz3WCs/exec', {
+    fetch('YOUR_GOOGLE_SCRIPT_URL', {
         method: 'POST',
-        body: JSON.stringify({ name: name })
+        body: JSON.stringify({ 
+            name: name,
+            phone: phone 
+        })
     })
-    .then(res => {
-        alert("Success! Good luck, " + name);
-        nameInput.value = ""; // Clear for next user
-        submitBtn.innerText = "SUBMIT TO DRAW";
-        submitBtn.disabled = false;
+    .then(() => {
+        alert("Success! Good luck, " + name + ". We will contact you at " + phone + " if you win!");
+        location.reload(); 
     })
     .catch(err => {
         console.error(err);
-        alert("Connection busy. Your entry will be processed.");
+        alert("Error saving. Please try again.");
         submitBtn.disabled = false;
     });
+}
 }
 </script>
 </body>
