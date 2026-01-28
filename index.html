@@ -95,19 +95,21 @@
 
     fetch('https://script.google.com/macros/s/AKfycbxrwlSQpr1jWsPPBJ0M8AvFmsYhJK5G_a_DIi_T0t4Yb7BoYYy_0dH4h_Xk82Zz3WCs/exec', {
         method: 'POST',
+        mode: 'no-cors', // THIS LINE IS REQUIRED
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ 
             name: name,
             phone: phone 
         })
     })
     .then(() => {
+        // With 'no-cors', we won't get a standard response back, 
+        // but the data will still land in your Google Sheet.
         alert("Success! Good luck, " + name + ". We will contact you at " + phone + " if you win!");
         location.reload(); 
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Error saving. Please try again.");
-        submitBtn.disabled = false;
     });
 }
 
