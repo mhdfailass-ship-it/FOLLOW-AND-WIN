@@ -178,7 +178,7 @@
         }
     }
 
-   function submit() {
+  function submit() {
     const name = document.getElementById('custName').value;
     const phone = document.getElementById('custPhone').value;
     const submitBtn = document.querySelector('.submit-btn');
@@ -188,9 +188,10 @@
     submitBtn.innerText = "SENDING...";
     submitBtn.disabled = true;
 
+    // Fixed the closing quote after /exec
     fetch('https://script.google.com/macros/s/AKfycbwxy09rQWiD4L6Q0VOdjC1SpJ2el3gYOpUtFSBTQWSFgqxXLLVNTXva-BbiDQYDiay5/exec', {
         method: 'POST',
-        mode: 'no-cors', // THIS LINE IS REQUIRED
+        mode: 'no-cors', 
         cache: 'no-cache',
         headers: {
             'Content-Type': 'application/json'
@@ -201,10 +202,14 @@
         })
     })
     .then(() => {
-        // With 'no-cors', we won't get a standard response back, 
-        // but the data will still land in your Google Sheet.
         alert("Success! Good luck, " + name + ". We will contact you at " + phone + " if you win!");
         location.reload(); 
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        alert("Error saving. Please try again.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "SUBMIT TO DRAW";
     });
 }
 
